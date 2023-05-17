@@ -24,19 +24,20 @@ class SessionsController extends Controller
 
         // attempt to authenticate and log in the user
         // based on the provided credentials
-        if (auth()->attempt($attributes))
+        if (! auth()->attempt($attributes))
         {
-            // session fixation
-            session()->regenerate();
-            // redirect with a success flash message
-            return redirect('/')->with('success', 'You are logged in!');
+            // auth failed
+            throw ValidationException::withMessages([
+                'email' => 'Your provided credentials could not be verified.'
+            ]);
+            // another way to do it!!!
+            // return back()->withErrors(['email' => 'Your provided credentials could not be verified.']);
         }
 
-        // auth failed
-        throw ValidationException::withMessages([
-            'email' => 'Your provided credentials could not be verified.']);
-        // another way to do it!!!
-        // return back()->withErrors(['email' => 'Your provided credentials could not be verified.']);
+        // session fixation
+        session()->regenerate();
+        // redirect with a success flash message
+        return redirect('/')->with('success', 'You are logged in!');
     }
 
     public function destroy()
