@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminPostController;
 use App\Http\Controllers\PostCommentsController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\RegisterController;
@@ -22,5 +23,12 @@ Route::post('logout', [SessionsController::class, 'destroy'])->middleware('auth'
 Route::get('login', [SessionsController::class, 'create'])->middleware('guest');
 Route::post('login', [SessionsController::class, 'store'])->middleware('guest');
 
-Route::get('admin/posts/create', [PostController::class, 'create'])->middleware('admin');
-Route::post('admin/posts', [PostController::class, 'store'])->middleware('admin');
+Route::middleware('can:admin')->group(function () {
+    // Route::resource('admin/posts', AdminPostController::class)->except('show'); => ist eine weniger aufwendige Schreibweise für das was darunter steht
+    Route::get('admin/posts', [AdminPostController::class, 'index']);
+    Route::get('admin/posts/create', [AdminPostController::class, 'create']);
+    Route::post('admin/posts', [AdminPostController::class, 'store']);
+    Route::get('admin/posts/{post}/edit', [AdminPostController::class, 'edit']);
+    Route::patch('admin/posts/{post}', [AdminPostController::class, 'update']);
+    Route::delete('admin/posts/{post}', [AdminPostController::class, 'destroy']);
+});

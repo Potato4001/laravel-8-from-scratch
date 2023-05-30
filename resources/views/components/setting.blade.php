@@ -10,7 +10,7 @@
             <h3 class="text-lg font-semibold border-b mr-10">Links</h3>
             <ul>
                 <li class="border-r mr-10">
-                    <a href="/admin/dashboard" class="{{ request()->is('admin/dashboard') ? 'text-blue-500' : '' }}">Dashboard</a>
+                    <a href="/admin/posts" class="{{ request()->is('admin/posts') ? 'text-blue-500' : '' }}">All Posts</a>
                 </li>
 
                 <li class="border-r mr-10">
