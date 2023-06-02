@@ -6,7 +6,7 @@
     </h1>
 
     <div class="flex">
-        <aside class="w-48">
+        <aside class="w-48 flex-shrink-0">
             <h3 class="text-lg font-semibold border-b mr-10">Links</h3>
             <ul>
                 <li class="border-r mr-10">
